@@ -7,7 +7,7 @@
     <gallo></gallo>
   </template>
   <template v-if="menu==2">
-    <gallinas></gallinas>
+    <gallina></gallina>
   </template>
   <template v-if="menu==3">
     <crias></crias>
