@@ -199,6 +199,7 @@
 
 <script>
     export default {
+      props : ['ruta'],
         data (){
             return {
                 puerco_id: 0,
@@ -262,7 +263,7 @@
         methods : {
             listarGallina (page,buscar,criterio){
                 let me=this;
-                var url= '/gallina?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url=this.ruta + '/gallina?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayGallina = respuesta.puercos.data;
@@ -297,7 +298,7 @@
                 formData.append('descripcion', me.descripcion);
                 //formData.append('estado', me.estado);
                 formData.append('foto', me.foto);
-                axios.post( '/gallina/registrar',
+                axios.post(this.ruta +  '/gallina/registrar',
                 formData,
                 {
                     headers: {
@@ -329,7 +330,7 @@
                 //formData.append('estado', me.estado);
                 formData.append('foto', me.foto);
                 formData.append("_method", "put");
-                axios.post( 'gallina/actualizar',
+                axios.post(this.ruta +  '/gallina/actualizar',
                 formData,
                 {
                     headers: {
@@ -362,7 +363,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.post('/gallina/desactivar',{
+                    axios.post(this.ruta + '/gallina/desactivar',{
                         'id': id
                     }).then(function (response) {
                         me.listarGallina();
@@ -401,7 +402,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.put('/gallina/activar',{
+                    axios.put(this.ruta + '/gallina/activar',{
                         'id': id
                     }).then(function (response) {
                         me.listarGallina();

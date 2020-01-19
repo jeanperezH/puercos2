@@ -208,6 +208,7 @@
 
 <script>
     export default {
+      props : ['ruta'],
         data (){
             return {
                 puerco_id: 0,
@@ -275,7 +276,7 @@
         methods : {
             listarCria (page,buscar,criterio){
                 let me=this;
-                var url= '/Cria?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url=this.ruta + '/Cria?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayCria = respuesta.puercos.data;
@@ -290,7 +291,7 @@
             },
             selectPapa(){
                 let me = this;
-                var url='/gallo/selectGallo';
+                var url=this.ruta + '/gallo/selectGallo';
                 axios.get(url).then(function(response){
                     var respuesta = response.data;
                     me.arrayPapa=respuesta.puercos;
@@ -302,7 +303,7 @@
             },
             selectMama(){
                 let me = this;
-                var url='/gallina/selectGallina';
+                var url=this.ruta + '/gallina/selectGallina';
                 axios.get(url).then(function(response){
                     var respuesta = response.data;
                     me.arrayMama=respuesta.puercos;
@@ -335,7 +336,7 @@
                 //formData.append('estado', me.estado);
                 formData.append('id_gallo', me.id_gallo);
                 formData.append('id_gallina', me.id_gallina);
-                axios.post( '/Cria/registrar',
+                axios.post(this.ruta +  '/Cria/registrar',
                 formData,
                 {
                     headers: {
@@ -369,7 +370,7 @@
                 formData.append('id_gallo', me.id_gallo);
                 formData.append('id_gallina', me.id_gallina);
                 //formData.append("_method", "put");
-                axios.put( 'Cria/actualizar',
+                axios.put(this.ruta +  'Cria/actualizar',
                 formData,
                 {
                     headers: {
@@ -402,7 +403,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.post('/Cria/desactivar',{
+                    axios.post(this.ruta + '/Cria/desactivar',{
                         'id': id
                     }).then(function (response) {
                         me.listarCria();
@@ -441,7 +442,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.put('/Cria/activar',{
+                    axios.put(this.ruta + '/Cria/activar',{
                         'id': id
                     }).then(function (response) {
                         me.listarCria();

@@ -4,13 +4,13 @@
     <inicio></inicio>
   </template>
   <template v-if="menu==1">
-    <gallo></gallo>
+    <gallo :ruta="ruta"></gallo>
   </template>
   <template v-if="menu==2">
-    <gallina></gallina>
+    <gallina :ruta="ruta"></gallina>
   </template>
   <template v-if="menu==3">
-    <cria></cria>
+    <cria :ruta="ruta"></cria>
   </template>
   
 @endsection

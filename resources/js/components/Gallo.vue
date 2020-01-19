@@ -200,6 +200,7 @@
 
 <script>
     export default {
+      props : ['ruta'],
         data (){
             return {
                 puerco_id: 0,
@@ -263,7 +264,7 @@
         methods : {
             listarGallo (page,buscar,criterio){
                 let me=this;
-                var url= '/gallo?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url=this.ruta + '/gallo?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayGallo = respuesta.puercos.data;
@@ -298,7 +299,7 @@
                 formData.append('descripcion', me.descripcion);
                 //formData.append('estado', me.estado);
                 formData.append('foto', me.foto);
-                axios.post( '/gallo/registrar',
+                axios.post(this.ruta +  '/gallo/registrar',
                 formData,
                 {
                     headers: {
@@ -330,7 +331,7 @@
                 //formData.append('estado', me.estado);
                 formData.append('foto', me.foto);
                 formData.append("_method", "put");
-                axios.post( 'gallo/actualizar',
+                axios.post(this.ruta +  '/gallo/actualizar',
                 formData,
                 {
                     headers: {
@@ -363,7 +364,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.post('/gallo/desactivar',{
+                    axios.post(this.ruta + '/gallo/desactivar',{
                         'id': id
                     }).then(function (response) {
                         me.listarGallo();
@@ -402,7 +403,7 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.put('/gallo/activar',{
+                    axios.put(this.ruta + '/gallo/activar',{
                         'id': id
                     }).then(function (response) {
                         me.listarGallo();

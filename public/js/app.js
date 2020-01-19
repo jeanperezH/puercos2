@@ -2047,6 +2047,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ruta'],
   data: function data() {
     return {
       puerco_id: 0,
@@ -2117,7 +2118,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     listarCria: function listarCria(page, buscar, criterio) {
       var me = this;
-      var url = '/Cria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      var url = this.ruta + '/Cria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayCria = respuesta.puercos.data;
@@ -2131,7 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectPapa: function selectPapa() {
       var me = this;
-      var url = '/gallo/selectGallo';
+      var url = this.ruta + '/gallo/selectGallo';
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayPapa = respuesta.puercos;
@@ -2141,7 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectMama: function selectMama() {
       var me = this;
-      var url = '/gallina/selectGallina';
+      var url = this.ruta + '/gallina/selectGallina';
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayMama = respuesta.puercos;
@@ -2172,7 +2173,7 @@ __webpack_require__.r(__webpack_exports__);
 
       formData.append('id_gallo', me.id_gallo);
       formData.append('id_gallina', me.id_gallina);
-      axios.post('/Cria/registrar', formData, {
+      axios.post(this.ruta + '/Cria/registrar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -2201,7 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('id_gallo', me.id_gallo);
       formData.append('id_gallina', me.id_gallina); //formData.append("_method", "put");
 
-      axios.put('Cria/actualizar', formData, {
+      axios.put(this.ruta + 'Cria/actualizar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -2230,7 +2231,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this;
-          axios.post('/Cria/desactivar', {
+          axios.post(_this.ruta + '/Cria/desactivar', {
             'id': id
           }).then(function (response) {
             me.listarCria();
@@ -2260,7 +2261,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this2;
-          axios.put('/Cria/activar', {
+          axios.put(_this2.ruta + '/Cria/activar', {
             'id': id
           }).then(function (response) {
             me.listarCria();
@@ -2625,6 +2626,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ruta'],
   data: function data() {
     return {
       puerco_id: 0,
@@ -2691,7 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     listarGallina: function listarGallina(page, buscar, criterio) {
       var me = this;
-      var url = '/gallina?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      var url = this.ruta + '/gallina?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayGallina = respuesta.puercos.data;
@@ -2725,7 +2727,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('descripcion', me.descripcion); //formData.append('estado', me.estado);
 
       formData.append('foto', me.foto);
-      axios.post('/gallina/registrar', formData, {
+      axios.post(this.ruta + '/gallina/registrar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -2753,7 +2755,7 @@ __webpack_require__.r(__webpack_exports__);
 
       formData.append('foto', me.foto);
       formData.append("_method", "put");
-      axios.post('gallina/actualizar', formData, {
+      axios.post(this.ruta + '/gallina/actualizar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -2782,7 +2784,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this;
-          axios.post('/gallina/desactivar', {
+          axios.post(_this.ruta + '/gallina/desactivar', {
             'id': id
           }).then(function (response) {
             me.listarGallina();
@@ -2812,7 +2814,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this2;
-          axios.put('/gallina/activar', {
+          axios.put(_this2.ruta + '/gallina/activar', {
             'id': id
           }).then(function (response) {
             me.listarGallina();
@@ -3147,6 +3149,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ruta'],
   data: function data() {
     return {
       puerco_id: 0,
@@ -3213,7 +3216,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     listarGallo: function listarGallo(page, buscar, criterio) {
       var me = this;
-      var url = '/gallo?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+      var url = this.ruta + '/gallo?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayGallo = respuesta.puercos.data;
@@ -3247,7 +3250,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('descripcion', me.descripcion); //formData.append('estado', me.estado);
 
       formData.append('foto', me.foto);
-      axios.post('/gallo/registrar', formData, {
+      axios.post(this.ruta + '/gallo/registrar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -3275,7 +3278,7 @@ __webpack_require__.r(__webpack_exports__);
 
       formData.append('foto', me.foto);
       formData.append("_method", "put");
-      axios.post('gallo/actualizar', formData, {
+      axios.post(this.ruta + '/gallo/actualizar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -3304,7 +3307,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this;
-          axios.post('/gallo/desactivar', {
+          axios.post(_this.ruta + '/gallo/desactivar', {
             'id': id
           }).then(function (response) {
             me.listarGallo();
@@ -3334,7 +3337,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var me = _this2;
-          axios.put('/gallo/activar', {
+          axios.put(_this2.ruta + '/gallo/activar', {
             'id': id
           }).then(function (response) {
             me.listarGallo();
@@ -54666,7 +54669,8 @@ Vue.component('cria', __webpack_require__(/*! ./components/Cria.vue */ "./resour
 var app = new Vue({
   el: '#app',
   data: {
-    menu: 0
+    menu: 0,
+    ruta: 'http://localhost/Gallinero/public'
   }
 });
 
