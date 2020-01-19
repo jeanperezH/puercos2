@@ -12,12 +12,14 @@
 <body>
     <div id="app">
       @include('cabecera.nabvar')
-
-      <!--contenido-->
-        @yield('contenido')
-      <!--Fin contenido-->
+        <div class="container">
+            <!--contenido-->
+            @yield('contenido')
+            <!--Fin contenido-->
+        </div>
+      
   </div>
-    <footer class="app-footer">
+    <footer >
         <div class="container">
             <div class="row">
                <div class="col-lg-4 col-md-6 col-12">
@@ -46,6 +48,7 @@
           </center>
     </footer>
 
+    
     <script src="js/estilos.js"></script>
     <script src="js/app.js"></script>
     <script src="js/all.min.js"></script>

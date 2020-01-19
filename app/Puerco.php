@@ -17,5 +17,9 @@ class Puerco extends Model
         'foto',
     ];
     public $timestamps = false;
+    public function Cria()
+    {
+        return $this->hasOne('App\Cria');
+    }
     
 }

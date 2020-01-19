@@ -3,8 +3,8 @@
 
       <div class="card">
           <div class="card-header">
-              <i class="fa fa-align-justify"></i> Gallinas
-              <button type="button" @click="abrirModal('gallina','registrar')" class="btn btn-success">
+              <i class="fa fa-align-justify"></i> Crías
+              <button type="button" @click="abrirModal('cria','registrar')" class="btn btn-success">
                   <i class="fas fa-plus-square"></i>&nbsp;Nuevo
               </button>
           </div>
@@ -14,13 +14,13 @@
                   <div class="col-md-6">
                       <div class="input-group">
                           <select class="form-control col-md-3" v-model="criterio">
-                            <option value="nombre">Gallina</option>
+                            <option value="nombre">Cría</option>
                             <option value="fecha_nacimiento">Fecha Nacimiento</option>
                             <option value="raza">Raza</option>
                             <option value="color">Color</option>
                           </select>
-                          <input type="text" v-model="buscar" @keyup.enter="listarGallina(1,buscar,criterio)" class="form-control" placeholder="Buscar Gallina">
-                          <button type="submit" @click="listarGallina(1,buscar,criterio)" class="btn btn-success"><i class="fas fa-search-location"></i> Buscar</button>
+                          <input type="text" v-model="buscar" @keyup.enter="listarCria(1,buscar,criterio)" class="form-control" placeholder="Buscar Cría">
+                          <button type="submit" @click="listarCria(1,buscar,criterio)" class="btn btn-success"><i class="fas fa-search-location"></i> Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <thead>
                       <tr class="table-danger">
                         <th scope="col">Opciones</th>
-                        <th scope="col">Gallina</th>
+                        <th scope="col">Cría</th>
                         <th scope="col">Raza</th>
                         <th scope="col">Color</th>
                         <th scope="col">Fecha Nacimiento</th>
@@ -40,21 +40,19 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="puerco in arrayGallina" :key="puerco.id">
+                      <tr v-for="puerco in arrayCria" :key="puerco.id">
                         <td class="table-success">
-                          <button type="button" @click="abrirModal('gallina','actualizar',puerco)" class="btn btn-warning btn-sm" >
-                            <i class="fas fa-pen"></i>
-                          </button>
+                          
                           <button type="button" @click="abrirModalImagen('Imagen','ver',puerco)" class="btn btn-success btn-sm" >
                             <i class="fas fa-eye"></i>
                           </button>
                           <template v-if="puerco.estado">
-                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarGallina(puerco.id)">
+                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarCria(puerco.id)">
                               <i class="fas fa-trash"></i>
                             </button>
                           </template>
                           <template v-else>
-                            <button type="button" class="btn btn-info btn-sm" @click="activarGallina(puerco.id)">
+                            <button type="button" class="btn btn-info btn-sm" @click="activarCria(puerco.id)">
                               <i class="fas fa-check"></i>
                             </button>
                           </template>
@@ -64,7 +62,7 @@
                         <td v-text="puerco.color"></td>
                         <td v-text="puerco.fecha_nacimiento"></td>
                         <td v-text="puerco.edad +' año(s) '"></td>
-                        
+
                         <td>
                           <div v-if="puerco.estado">
                             <span class="badge badge-success">Vivo</span>
@@ -97,7 +95,7 @@
       <!-- Modal Registrar Actualizar-->
       <div class="modal" tabindex="-1" :class="{'mostrar' : modal}" role="dialog">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
-          <div class="modal-content">
+          <div class="modal-content ">
             <div class="modal-header">
               <h5 class="modal-title" v-text="tituloModal"></h5>
               <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
@@ -107,25 +105,41 @@
             <div class="modal-body">
               <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                   <div class="form-group row">
-                      <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
+                      <label class="col-md-3 form-control-label" for="text-input">Papá</label>
                     <div class="col-md-9">
-                      <input type="text" v-model="nombre" class="form-control" placeholder="nombre de la gallina">                                        
+                      <select class="form-control" v-model="id_gallo" >
+                          <option v-for="papas in arrayPapa" :key="papas.id" :value="papas.id" v-text="papas.nombre"></option>
+                      </select>                                       
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 form-control-label" for="text-input">Mamá</label>
+                    <div class="col-md-9">
+                      <select class="form-control" v-model="id_gallina" >
+                          <option v-for="mamas in arrayMama" :key="mamas.id" :value="mamas.id" v-text="mamas.nombre"></option>
+                      </select>                                       
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 form-control-label" for="text-input">Nombre(*)</label>
+                    <div class="col-md-9">
+                      <input type="text" v-model="nombre" class="form-control" placeholder="nombre de la cría">                                        
                     </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-md-3 form-control-label" for="text-input">Raza</label>
                     <div class="col-md-9">
-                      <input type="text" v-model="raza" class="form-control" placeholder="raza de la gallina">                                        
+                      <input type="text" v-model="raza" class="form-control" placeholder="raza de la cría">                                        
                     </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-md-3 form-control-label" for="text-input">Color</label>
                     <div class="col-md-9">
-                      <input type="text" v-model="color" class="form-control" placeholder="color de la gallina">                                        
+                      <input type="text" v-model="color" class="form-control" placeholder="color de la cría">                                        
                     </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-md-3 form-control-label" for="text-input">Fecha Nacimiento</label>
+                      <label class="col-md-3 form-control-label" for="text-input">Fecha Nacimiento(*)</label>
                     <div class="col-md-9">
                       <input type="date" v-model="fecha_nacimiento" class="form-control" >                                        
                     </div>
@@ -133,25 +147,19 @@
                   <div class="form-group row">
                       <label class="col-md-3 form-control-label" for="text-input">Ubicacion</label>
                     <div class="col-md-9">
-                      <input type="text" v-model="ubicacion" class="form-control" placeholder="ubicación de la gallina">                                        
+                      <input type="text" v-model="ubicacion" class="form-control" placeholder="ubicación de la cría">                                        
                     </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-md-3 form-control-label" for="text-input">Descripcion</label>
                     <div class="col-md-9">
-                      <input type="text" v-model="descripcion" class="form-control" placeholder="descripcion de la gallina">                                        
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                      <label class="col-md-3 form-control-label" for="text-input" >Foto</label>
-                    <div class="col-md-9">
-                      <input type="file" id="foto" ref="foto" v-on:change="img()" class="form-control" accept="image/*"/>
+                      <input type="text" v-model="descripcion" class="form-control" placeholder="descripcion de la cría">                                        
                     </div>
                   </div>
                         
-                  <div v-show="errorGallina" class="form-group row div-error">
+                  <div v-show="errorCria" class="form-group row div-error">
                     <div class="text-center text-error">
-                      <div v-for="error in errorMostrarMsjGallina" :key="error" v-text="error">
+                      <div v-for="error in errorMostrarMsjCria" :key="error" v-text="error">
 
                       </div>
                     </div>
@@ -160,15 +168,15 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" @click="cerrarModal()">Cerrar</button>
-              <button type="button" v-if="tipoAccion==1" class="btn btn-success" @click="registrarGallina()">Guardar</button>
-              <button type="button" v-if="tipoAccion==2" class="btn btn-success" @click="actualizarGallina()">Actualizar</button>
+              <button type="button" v-if="tipoAccion==1" class="btn btn-success" @click="registrarCria()">Guardar</button>
+              <button type="button" v-if="tipoAccion==2" class="btn btn-success" @click="actualizarCria()">Actualizar</button>
             </div>
           </div>
         </div>
       </div>
       <!-- Modal Ver Imagen-->
       <div class="modal" tabindex="-2" :class="{'mostrarImagen' : modalImagen}" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-text="tituloModal"></h5>
@@ -177,15 +185,16 @@
               </button>
             </div>
             <div class="modal-body">
-                <center><img :src="this.foto" class="rounded"  width="100%"><br>
-                <div class="card border-success mb-3" style="max-width: 18rem;">
-                  <div class="card-header ">DETALLES DE LA GALLINA</div>
-                  <div class="card-body">
-                    <h6 class="card-text text-left">Descripción: <td v-text="descripcion"></td></h6>
-                    <h6 class="card-text text-left">Ubicación:<td v-text="ubicacion"></td></h6>
-                  </div>
+              
+              <center>
+              <div class="card border-success mb-3" style="max-width: 18rem;">
+                <div class="card-header ">DETALLES DE LA CRÍA</div>
+                <div class="card-body">
+                  <h6 class="card-text text-left">Descripción: <td v-text="descripcion"></td></h6>
+                  <h6 class="card-text text-left">Ubicación:<td v-text="ubicacion"></td></h6>
                 </div>
-                </center>
+              </div>
+              </center>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" @click="cerrarModalImagen()">Close</button>
@@ -202,6 +211,8 @@
         data (){
             return {
                 puerco_id: 0,
+                id_gallo:0,
+                id_gallina:0,
                 nombre : '',
                 raza : '',
                 color : '',
@@ -210,13 +221,13 @@
                 descripcion : '',
                 estado : '',
                 foto : null,
-                arrayGallina : [],
+                arrayCria : [],
                 modal : 0,
                 modalImagen:0,
                 tituloModal : '',
                 tipoAccion : 0,
-                errorGallina : 0,
-                errorMostrarMsjGallina : [],
+                errorCria : 0,
+                errorMostrarMsjCria : [],
                 pagination : {
                     'total' : 0,
                     'current_page' : 0,
@@ -228,6 +239,8 @@
                 offset : 3,
                 criterio : 'nombre',
                 buscar : '',
+                arrayPapa:[],
+                arrayMama:[],
             }
         },
         computed:{
@@ -260,12 +273,12 @@
             }
         },
         methods : {
-            listarGallina (page,buscar,criterio){
+            listarCria (page,buscar,criterio){
                 let me=this;
-                var url= '/gallina?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url= '/Cria?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arrayGallina = respuesta.puercos.data;
+                    me.arrayCria = respuesta.puercos.data;
                     me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
@@ -275,16 +288,40 @@
             img() {
             this.foto = this.$refs.foto.files[0];
             },
+            selectPapa(){
+                let me = this;
+                var url='/gallo/selectGallo';
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayPapa=respuesta.puercos;
+                    
+                })
+                .catch(function (error){
+                    console.log(error);
+                });
+            },
+            selectMama(){
+                let me = this;
+                var url='/gallina/selectGallina';
+                axios.get(url).then(function(response){
+                    var respuesta = response.data;
+                    me.arrayMama=respuesta.puercos;
+                    
+                })
+                .catch(function (error){
+                    console.log(error);
+                });
+            },
             
             cambiarPagina(page,buscar,criterio){
                 let me = this;
                 //Actualiza la página actual
                 me.pagination.current_page = page;
                 //Envia la petición para visualizar la data de esa página
-                me.listarGallina(page,buscar,criterio);
+                me.listarCria(page,buscar,criterio);
             },
-            registrarGallina(){
-                if (this.validarGallina()){
+            registrarCria(){
+                if (this.validarCria()){
                     return;
                 }
                 var me = this;
@@ -296,8 +333,9 @@
                 formData.append('ubicacion', me.ubicacion);
                 formData.append('descripcion', me.descripcion);
                 //formData.append('estado', me.estado);
-                formData.append('foto', me.foto);
-                axios.post( '/gallina/registrar',
+                formData.append('id_gallo', me.id_gallo);
+                formData.append('id_gallina', me.id_gallina);
+                axios.post( '/Cria/registrar',
                 formData,
                 {
                     headers: {
@@ -306,15 +344,16 @@
                 }
                 ).then(function(){
                     me.cerrarModal();
-                    me.listarGallina(1,'','nombre');
+                    me.listarCria(1,'','nombre');
                 })
                 .catch(function(error){
                 console.log(error);
                 });
                     
             },
-            actualizarGallina(){
-               if (this.validarGallina()){
+            
+            actualizarCria(){
+               if (this.validarCria()){
                     return;
                 }
                 var me = this;
@@ -327,9 +366,10 @@
                 formData.append('ubicacion', me.ubicacion);
                 formData.append('descripcion', me.descripcion);
                 //formData.append('estado', me.estado);
-                formData.append('foto', me.foto);
-                formData.append("_method", "put");
-                axios.post( 'gallina/actualizar',
+                formData.append('id_gallo', me.id_gallo);
+                formData.append('id_gallina', me.id_gallina);
+                //formData.append("_method", "put");
+                axios.put( 'Cria/actualizar',
                 formData,
                 {
                     headers: {
@@ -338,16 +378,16 @@
                 }
                 ).then(function(){
                     me.cerrarModal();
-                    me.listarGallina(1,'','nombre');
+                    me.listarCria(1,'','nombre');
                 })
                 .catch(function(error){
                 console.log(error);
                 });
 
             },
-            desactivarGallina(id){
+            desactivarCria(id){
                swal({
-                title: 'Esta seguro de desactivar a esta gallina?',
+                title: 'Esta seguro de desactivar a este Cria?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -362,13 +402,13 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.post('/gallina/desactivar',{
+                    axios.post('/Cria/desactivar',{
                         'id': id
                     }).then(function (response) {
-                        me.listarGallina();
+                        me.listarCria();
                         swal(
                         'Desactivado!',
-                        'La gallina ha sido desactivado',
+                        'El Cria ha sido desactivado',
                         'success'
                         )
                     }).catch(function (error) {
@@ -384,9 +424,9 @@
                 }
                 }) 
             },
-            activarGallina(id){
+            activarCria(id){
                swal({
-                title: 'Esta seguro de activar a esta gallina?',
+                title: 'Esta seguro de activar a este Cria?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -401,13 +441,13 @@
                 if (result.value) {
                     let me = this;
 
-                    axios.put('/gallina/activar',{
+                    axios.put('/Cria/activar',{
                         'id': id
                     }).then(function (response) {
-                        me.listarGallina();
+                        me.listarCria();
                         swal(
                         'Activado!',
-                        'La gallina ha sido activado con éxito.',
+                        'El Cria ha sido activado con éxito.',
                         'success'
                         )
                     }).catch(function (error) {
@@ -423,21 +463,18 @@
                 }
                 }) 
             },            
-            validarGallina(){
-                this.errorGallina=0;
-                this.errorMostrarMsjGallina =[];
+            validarCria(){
+                this.errorCria=0;
+                this.errorMostrarMsjCria =[];
 
-                if (!this.nombre) this.errorMostrarMsjGallina.push("Ingrese el nombre de Gallina ");
-                if (!this.fecha_nacimiento) this.errorMostrarMsjGallina.push("ingrese una fecha de nacimiento");
-                
-                if(this.foto){
-                  if (!(/\.(jpg|png|gif)$/i).test(foto.value)) this.errorMostrarMsjGallina.push("Ingrese una foto válida .jpg .png");
-                }
-                
-                
-                if (this.errorMostrarMsjGallina.length) this.errorGallina = 1;
+                if (this.id_gallo==0) this.errorMostrarMsjCria.push("Seleccione un papá");
+                if (this.id_gallina==0) this.errorMostrarMsjCria.push("Seleccione una mamá");
+                if (!this.nombre) this.errorMostrarMsjCria.push("Ingrese el nombre de la Cria ");
+                if (!this.fecha_nacimiento) this.errorMostrarMsjCria.push("ingrese una fecha de nacimiento");
+          
+                if (this.errorMostrarMsjCria.length) this.errorCria = 1;
 
-                return this.errorGallina;
+                return this.errorCria;
             },
             cerrarModal(){
                 this.modal=0;
@@ -451,18 +488,20 @@
                 this.descripcion='';
                 this.estado='';
                 this.foto=null;
-                this.errorGallina=0;
+                this.errorCria=0;
                 this.tipoAccion=0;
+                this.id_gallo=0;
+                this.id_gallina=0;
 
             },
             abrirModal(modelo, accion, data = []){
                 switch(modelo){
-                    case "gallina":
+                    case "cria":
                     {
                         switch(accion){
                             case 'registrar':{
                                 this.modal = 1;
-                                this.tituloModal = 'Registrar gallina';
+                                this.tituloModal = 'Registrar cria';
                                 this.nombre='';
                                 this.raza='';
                                 this.color='';
@@ -470,15 +509,16 @@
                                 this.ubicacion='';
                                 this.descripcion='';
                                 this.estado='';
-                                this.foto=null;
+                                this.id_gallo=0;
+                                this.id_gallina=0;
                                 this.tipoAccion = 1;
                                 break;
                             }
                             case 'actualizar':{
                                 this.modal=1;
-                                this.tituloModal='Actualizar gallina';
+                                this.tituloModal='Actualizar cria';
                                 this.tipoAccion=2;
-                                this.puerco_id=data['id_gallina'];
+                                this.puerco_id=data['id'];
                                 this.nombre = data['nombre'];
                                 this.raza = data['raza'];
                                 this.color = data['color'];
@@ -486,13 +526,15 @@
                                 this.ubicacion = data['ubicacion'];
                                 this.descripcion = data['descripcion'];
                                 this.estado = data['estado'];
-                                //this.foto=['foto'];
+                                this.id_gallo=data['id_gallo'];
+                                this.id_gallina=data['id_gallina'];
                                 break;
                             }
                         }
                     }
                 }
-
+              this.selectPapa();
+              this.selectMama();
             },
             abrirModalImagen(modelo, accion, data = []){
                 switch(modelo){
@@ -502,15 +544,12 @@
 
                             case 'ver':{
                                 this.modalImagen=1;
-                                this.tituloModal='Imagen de la gallina';
+                                this.tituloModal='Detalles de la Cría';
                                 this.puerco_id=data['id'];
-                                this.foto = data['foto'];
-                                this.descripcion = data['descripcion'];
-                                this.ubicacion = data['ubicacion'];
-                                /*let rename = this.foto.slice(6, -1  );
-                                this.foto = "storage"+rename+"g";*/
-                                let rename = this.foto.replace('public','storage')
-                                this.foto = rename;
+                                
+                                this.descripcion=data['descripcion'];
+                                this.ubicacion=data['ubicacion'];
+                                
                                 break;
                             }
                         }
@@ -529,7 +568,7 @@
             }
         },
         mounted() {
-            this.listarGallina(1,this.buscar,this.criterio);
+            this.listarCria(1,this.buscar,this.criterio);
         }
     }
 </script>

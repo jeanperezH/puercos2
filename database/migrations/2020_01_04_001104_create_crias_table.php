@@ -14,8 +14,8 @@ class CreateCriasTable extends Migration
     public function up()
     {
         Schema::create('crias', function (Blueprint $table) {
-            $table->bigInteger('id_cria')->unsigned();
-            $table->foreign('id_cria')->references('id')->on('puercos')->onDelete('cascade');
+            $table->bigInteger('id')->unsigned();
+            $table->foreign('id')->references('id')->on('puercos')->onDelete('cascade');
             $table->bigInteger('id_gallo')->unsigned();
             $table->foreign('id_gallo')->references('id_gallo')->on('gallos')->onDelete('cascade');
             $table->bigInteger('id_gallina')->unsigned();

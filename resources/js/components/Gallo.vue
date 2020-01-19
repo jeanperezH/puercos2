@@ -35,8 +35,7 @@
                         <th scope="col">Color</th>
                         <th scope="col">Fecha Nacimiento</th>
                         <th scope="col">Edad</th>
-                        <th scope="col">Ubicacion</th>
-                        <th scope="col">Descripción</th>
+                        
                         <th scope="col">Estado</th>
                       </tr>
                     </thead>
@@ -65,8 +64,7 @@
                         <td v-text="puerco.color"></td>
                         <td v-text="puerco.fecha_nacimiento"></td>
                         <td v-text="puerco.edad +' año(s) '"></td>
-                        <td v-text="puerco.ubicacion"></td>
-                        <td v-text="puerco.descripcion"></td>
+
                         <td>
                           <div v-if="puerco.estado">
                             <span class="badge badge-success">Vivo</span>
@@ -98,8 +96,8 @@
       
       <!-- Modal Registrar Actualizar-->
       <div class="modal" tabindex="-1" :class="{'mostrar' : modal}" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content ">
             <div class="modal-header">
               <h5 class="modal-title" v-text="tituloModal"></h5>
               <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
@@ -170,7 +168,7 @@
       </div>
       <!-- Modal Ver Imagen-->
       <div class="modal" tabindex="-2" :class="{'mostrarImagen' : modalImagen}" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" v-text="tituloModal"></h5>
@@ -179,7 +177,16 @@
               </button>
             </div>
             <div class="modal-body">
-              <center><img :src="this.foto"  width="100%"></center>
+              
+              <center><img :src="this.foto" class="rounded"  width="100%"><br>
+              <div class="card border-success mb-3" style="max-width: 18rem;">
+                <div class="card-header ">DETALLES DEL GALLO</div>
+                <div class="card-body">
+                  <h6 class="card-text text-left">Descripción: <td v-text="descripcion"></td></h6>
+                  <h6 class="card-text text-left">Ubicación:<td v-text="ubicacion"></td></h6>
+                </div>
+              </div>
+              </center>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" @click="cerrarModalImagen()">Close</button>
@@ -499,6 +506,8 @@
                                 this.tituloModal='Imagen del Gallo';
                                 this.puerco_id=data['id'];
                                 this.foto = data['foto'];
+                                this.descripcion=data['descripcion'];
+                                this.ubicacion=data['ubicacion'];
                                 /*let rename = this.foto.slice(6, -1  );
                                 this.foto = "storage"+rename+"g";*/
                                 let rename = this.foto.replace('public','storage')
@@ -516,6 +525,8 @@
                 this.puerco_id=0;
                 this.tituloModal='';
                 this.foto=null;
+                this.descripcion='';
+                this.ubicacion='';
             }
         },
         mounted() {

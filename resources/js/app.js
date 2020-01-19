@@ -13,6 +13,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('inicio', require('./components/Inicio.vue').default);
 Vue.component('gallo', require('./components/Gallo.vue').default);
 Vue.component('gallina', require('./components/Gallina.vue').default);
+Vue.component('cria', require('./components/Cria.vue').default);
 
 const app = new Vue({
     el: '#app',

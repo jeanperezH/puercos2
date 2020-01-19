@@ -11,7 +11,7 @@ class GallinaController extends Controller
 {
     public function index(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -46,6 +46,16 @@ class GallinaController extends Controller
             ],
             'puercos' => $puercos
         ];
+    }
+
+    public function selectGallina(Request $request){
+        if (!$request->ajax()) return redirect('/');
+        $mamas = Puerco::join('gallinas','puercos.id','=','gallinas.id_gallina')
+        ->select('puercos.id','puercos.nombre','puercos.raza','puercos.color',
+            'gallinas.id_gallina')
+        ->where('puercos.estado','=',1)
+        ->orderBy('puercos.id', 'desc')->get();
+        return ['puercos'=>$mamas];
     }
 
     public function store(Request $request)

@@ -10,7 +10,7 @@
     <gallina></gallina>
   </template>
   <template v-if="menu==3">
-    <crias></crias>
+    <cria></cria>
   </template>
   
 @endsection

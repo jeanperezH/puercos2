@@ -12,7 +12,7 @@ class GalloController extends Controller
 {
     public function index(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -47,6 +47,16 @@ class GalloController extends Controller
             ],
             'puercos' => $puercos
         ];
+    }
+
+    public function selectGallo(Request $request){
+        if (!$request->ajax()) return redirect('/');
+        $papas = Puerco::join('gallos','puercos.id','=','gallos.id_gallo')
+        ->select('puercos.id','puercos.nombre','puercos.raza','puercos.color',
+            'gallos.id_gallo')
+        ->where('puercos.estado','=',1)
+        ->orderBy('puercos.id', 'desc')->get();
+        return ['puercos'=>$papas];
     }
 
     public function store(Request $request)

@@ -8,13 +8,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li @click="menu=1" class="nav-item active">
-            <a class="nav-link" href="#"><i class="fas fa-mars"> </i>Gallos</a>
+            <a class="nav-link" href="#"><i class="fas fa-mars"> </i> Gallos</a>
         </li>
         <li @click="menu=2" class="nav-item active">
-            <a class="nav-link" href="#"><i class="fas fa-venus"></i>Gallinas</a>
+            <a class="nav-link" href="#"><i class="fas fa-venus"></i> Gallinas</a>
         </li>
         <li @click="menu=3" class="nav-item active">
-            <a class="nav-link" href="#"><i class="fas fa-egg"></i>Crías</a>
+            <a class="nav-link" href="#"><i class="fas fa-egg"></i> Crías</a>
         </li>
         
       </ul>
